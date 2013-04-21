@@ -1,0 +1,4 @@
+Animation 8
+Object monkey.obj
+Position 0 0 0 0
+Position 8 .3 .65 .5
