@@ -57,7 +57,7 @@ float g_y_pan = 0;
 
 float g_scale = 1;
 
-float duration = 0;
+float duration = 1;
 float g_time_reset = 0;
 
 float g_lightPos[] = {1, 1, -1, 0};
@@ -277,16 +277,10 @@ void readFile(){
         for(i = 0; g_scannedvariable[i]; i++){
             g_scannedvariable[i] = tolower(g_scannedvariable[i]);
         }
-        if(strcmp(g_scannedvariable, "animation") == 0){
-            sscanf(bufline, "%*s %f", &duration);
-        }else if(strcmp(g_scannedvariable, "object") == 0){
+        if(strcmp(g_scannedvariable, "object") == 0){
             sscanf(bufline, "%*s %s", g_scannedvariable_two);
             printf("%s", g_scannedvariable_two);
             readMesh(g_scannedvariable_two);
-        }else if(strcmp(g_scannedvariable, "position") == 0){
-            sscanf(bufline, "%*s %f %f %f %f", &movePath[g_npoint].t, &movePath[g_npoint].p.x, &movePath[g_npoint].p.y, &movePath[g_npoint].p.z);
-            pt[g_npoint] = movePath[g_npoint].t;
-            g_npoint++;
         }
     }
     fclose(f);
@@ -302,6 +296,10 @@ void mouse(int button, int state, int x, int y){
         g_mouse_y = y;
         printf("MOUSE: %d, %d\n", x, y);
         g_npoint = 1;
+        movePath[g_npoint].t = 1;
+        movePath[g_npoint].p.x = x;
+        movePath[g_npoint].p.y = y;
+        movePath[g_npoint].p.z = 0;
     }
     if (button == GLUT_LEFT_BUTTON && state==GLUT_UP){
         g_moving = 0;
