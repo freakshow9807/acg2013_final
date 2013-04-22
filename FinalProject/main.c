@@ -57,7 +57,7 @@ float g_y_pan = 0;
 
 float g_scale = 1;
 
-float duration = 1;
+float duration = 3;
 float g_time_reset = 0;
 
 float g_lightPos[] = {1, 1, -1, 0};
@@ -251,7 +251,7 @@ void display(void){
 
     drawMesh();
 
-    g_npoint = 0;
+//    g_npoint = 0;
     glutSwapBuffers();
 
 }
@@ -297,9 +297,13 @@ void mouse(int button, int state, int x, int y){
         printf("MOUSE: %d, %d\n", x, y);
         g_npoint = 1;
         movePath[g_npoint].t = 1;
-        movePath[g_npoint].p.x = x;
-        movePath[g_npoint].p.y = y;
+        movePath[g_npoint].p.x = x*0.01;
+        movePath[g_npoint].p.y = y*0.01;
         movePath[g_npoint].p.z = 0;
+        pt[g_npoint] = movePath[g_npoint].t;
+        duration = current_time() + 3;
+        g_npoint = 2;
+        tangentChange();
     }
     if (button == GLUT_LEFT_BUTTON && state==GLUT_UP){
         g_moving = 0;
@@ -455,6 +459,11 @@ int main(int ac, char* av[]){
     glEnable(GL_DEPTH_TEST);
 
     glLightfv(GL_LIGHT0, GL_POSITION, g_lightPos);
+    movePath[0].t = 0;
+    movePath[0].p.x = 0;
+    movePath[0].p.y = 0;
+    movePath[0].p.z = 0;
+    pt[0] = 0;
 
     glutMainLoop();
     return 0;

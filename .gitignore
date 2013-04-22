@@ -21,4 +21,4 @@ history.xml
 
 #Mac_Stuff
 .DS_Store
-finalProject.app
+*.app
